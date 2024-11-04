@@ -14,15 +14,10 @@ public class Window3x3 extends JFrame {
     public Window3x3() {
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
-        panel2.setSize(600, 50);
-        panel1.setSize(600, 600);
-        panel1.setAlignmentX(0);
-        panel1.setAlignmentY(200);
-        panel2.setBackground(new Color(255, 0, 0));
         JButton start = new JButton();
         panel2.add(start);
         setTitle("3x3");
-        setSize(600, 700);
+        setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Center the window
 
@@ -39,9 +34,7 @@ public class Window3x3 extends JFrame {
                 panel1.add(buttons[i][j]);
             }
         }
-        add(panel2);
         add(panel1);
-        setLayout(new GridLayout(2, 1));
     }
 
     private class ButtonClickListener implements ActionListener {
