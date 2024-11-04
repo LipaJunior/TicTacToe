@@ -198,22 +198,23 @@ public class Window4x4 extends JFrame {
                 }
             }
         }
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                if (mark.equals(buttons[i][j].getText()) && mark.equals(buttons[i + 1][j + 1].getText())
-                        && mark.equals(buttons[i + 2][j + 2].getText())) {
-                    score++;
-                }
-            }
+        if (mark.equals(buttons[0][0].getText()) && mark.equals(buttons[1][1].getText())
+                && mark.equals(buttons[2][2].getText())) {
+            score++;
         }
-        for (int i = 0; i < 2; i++) {
-            for (int j = 2; j < 4; j++) {
-                if (mark.equals(buttons[i][j].getText()) && mark.equals(buttons[i + 1][j - 1].getText())
-                        && mark.equals(buttons[i + 2][j - 2].getText())) {
-                    score++;
-                }
-            }
+        if (mark.equals(buttons[1][1].getText()) && mark.equals(buttons[2][2].getText())
+                && mark.equals(buttons[3][3].getText())) {
+            score++;
         }
+        if (mark.equals(buttons[0][3].getText()) && mark.equals(buttons[1][2].getText())
+                && mark.equals(buttons[2][1].getText())) {
+            score++;
+        }
+        if (mark.equals(buttons[1][2].getText()) && mark.equals(buttons[2][1].getText())
+                && mark.equals(buttons[3][0].getText())) {
+            score++;
+        }
+
         return score;
     }
 
