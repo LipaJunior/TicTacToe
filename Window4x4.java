@@ -65,6 +65,9 @@ public class Window4x4 extends JFrame {
                         JOptionPane.showMessageDialog(null, "Bot wins!");
                         gameOngoing = false;
                         return;
+                    } else if (isBoardFull()) {
+                        JOptionPane.showMessageDialog(null, "It's a draw!");
+                        gameOngoing = false;
                     }
                     playerTurn = true;
 
@@ -139,7 +142,7 @@ public class Window4x4 extends JFrame {
 
     public int minimax(int depth, boolean isMaximizing, String botMark, String playerMark) {
         if (depth > 4) {
-            return heuristics(botMark) - heuristics(playerMark);
+            return heuristics(botMark, playerMark) - heuristics(playerMark, botMark);
         }
         if (checkWinner(botMark)) {
             return 100;
@@ -180,38 +183,49 @@ public class Window4x4 extends JFrame {
         }
     }
 
-    public int heuristics(String mark) {
+    public int heuristics(String MyMark, String EnemyMark) {
         int score = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
-                if (mark.equals(buttons[i][j].getText()) && mark.equals(buttons[i][j + 1].getText())
-                        && mark.equals(buttons[i][j + 2].getText())) {
-                    score++;
+                if (MyMark.equals(buttons[i][j].getText()) && MyMark.equals(buttons[i][j + 1].getText())
+                        && MyMark.equals(buttons[i][j + 2].getText())) {
+                    if (j == 0 && !EnemyMark.equals(buttons[i][j + 3].getText())) {
+                        score++;
+                    }
+                    if (j == 1 && !EnemyMark.equals(buttons[i][j - 1].getText())) {
+                        score++;
+                    }
                 }
             }
         }
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
-                if (mark.equals(buttons[i][j].getText()) && mark.equals(buttons[i + 1][j].getText())
-                        && mark.equals(buttons[i + 2][j].getText())) {
-                    score++;
+                if (MyMark.equals(buttons[i][j].getText()) && MyMark.equals(buttons[i + 1][j].getText())
+                        && MyMark.equals(buttons[i + 2][j].getText())) {
+                    if (i == 0 && !EnemyMark.equals(buttons[i + 3][j].getText())) {
+                        score++;
+                    }
+                    if (i == 1 && !EnemyMark.equals(buttons[i - 1][j].getText())) {
+                        score++;
+                    }
+
                 }
             }
         }
-        if (mark.equals(buttons[0][0].getText()) && mark.equals(buttons[1][1].getText())
-                && mark.equals(buttons[2][2].getText())) {
+        if (MyMark.equals(buttons[0][0].getText()) && MyMark.equals(buttons[1][1].getText())
+                && MyMark.equals(buttons[2][2].getText()) && !EnemyMark.equals(buttons[3][3].getText())) {
             score++;
         }
-        if (mark.equals(buttons[1][1].getText()) && mark.equals(buttons[2][2].getText())
-                && mark.equals(buttons[3][3].getText())) {
+        if (MyMark.equals(buttons[1][1].getText()) && MyMark.equals(buttons[2][2].getText())
+                && MyMark.equals(buttons[3][3].getText()) && !EnemyMark.equals(buttons[0][0].getText())) {
             score++;
         }
-        if (mark.equals(buttons[0][3].getText()) && mark.equals(buttons[1][2].getText())
-                && mark.equals(buttons[2][1].getText())) {
+        if (MyMark.equals(buttons[0][3].getText()) && MyMark.equals(buttons[1][2].getText())
+                && MyMark.equals(buttons[2][1].getText()) && !EnemyMark.equals(buttons[3][0].getText())) {
             score++;
         }
-        if (mark.equals(buttons[1][2].getText()) && mark.equals(buttons[2][1].getText())
-                && mark.equals(buttons[3][0].getText())) {
+        if (MyMark.equals(buttons[1][2].getText()) && MyMark.equals(buttons[2][1].getText())
+                && MyMark.equals(buttons[3][0].getText()) && !EnemyMark.equals(buttons[0][3].getText())) {
             score++;
         }
 
