@@ -48,29 +48,45 @@ public class Window3x3 extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (gameOngoing && playerTurn) {
-                JButton button = buttons[row][col];
-                if (button.getText().equals("")) {
-                    button.setText(playerMark);
-                    if (checkWinner(playerMark)) {
-                        JOptionPane.showMessageDialog(null, "Player wins!");
-                        gameOngoing = false;
-                        return;
-                    }
-                    playerTurn = false;
-                    if (!isBoardFull()) {
-                        BestMove(botMark, playerMark);
-                        if (checkWinner(botMark)) {
-                            JOptionPane.showMessageDialog(null, "Bot wins!");
-                            gameOngoing = false;
-                            return;
-                        }
-                        playerTurn = true;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "It's a draw!");
-                        gameOngoing = false;
-                    }
-                }
+            if (!gameOngoing || !playerTurn || isBoardFull()) {
+                return;
+            }
+
+            JButton button = buttons[row][col];
+
+            if (!button.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Invalid move! Choose an empty square.");
+                return;
+            }
+
+            button.setText(playerMark);
+
+            if (checkWinner(playerMark)) {
+                JOptionPane.showMessageDialog(null, "Player wins!");
+                gameOngoing = false;
+                return;
+            }
+
+            if (isBoardFull()) {
+                JOptionPane.showMessageDialog(null, "It's a draw!");
+                gameOngoing = false;
+                return;
+            }
+
+            playerTurn = false;
+            BestMove(botMark, playerMark);
+
+            if (checkWinner(botMark)) {
+                JOptionPane.showMessageDialog(null, "Bot wins!");
+                gameOngoing = false;
+                return;
+            }
+
+            if (isBoardFull()) {
+                JOptionPane.showMessageDialog(null, "It's a draw!");
+                gameOngoing = false;
+            } else {
+                playerTurn = true;
             }
         }
     }

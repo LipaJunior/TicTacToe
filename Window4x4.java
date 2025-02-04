@@ -43,41 +43,45 @@ public class Window4x4 extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (gameOngoing && playerTurn && !isBoardFull()) {
-                JButton button = buttons[row][col];
-                if (button.getText().equals("")) {
-                    button.setText(playerMark);
+            if (!gameOngoing || !playerTurn || isBoardFull()) {
+                return;
+            }
 
-                    if (isBoardFull() && !checkWinner(playerMark)) {
-                        JOptionPane.showMessageDialog(null, "It's a draw!");
-                        gameOngoing = false;
-                    } else if (checkWinner(playerMark)) {
-                        JOptionPane.showMessageDialog(null, "Player wins!");
-                        gameOngoing = false;
-                        return;
-                    }
+            JButton button = buttons[row][col];
 
-                }
-                playerTurn = false;
-                if (!isBoardFull()) {
-                    BestMove(botMark, playerMark);
-                    if (checkWinner(botMark)) {
-                        JOptionPane.showMessageDialog(null, "Bot wins!");
-                        gameOngoing = false;
-                        return;
-                    } else if (isBoardFull()) {
-                        JOptionPane.showMessageDialog(null, "It's a draw!");
-                        gameOngoing = false;
-                    }
-                    playerTurn = true;
+            if (!button.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Invalid move! Choose an empty square.");
+                return;
+            }
 
-                } else if (isBoardFull()) {
-                    JOptionPane.showMessageDialog(null, "It's a draw!");
-                    gameOngoing = false;
-                }
-            } else if (isBoardFull()) {
+            button.setText(playerMark);
+
+            if (checkWinner(playerMark)) {
+                JOptionPane.showMessageDialog(null, "Player wins!");
+                gameOngoing = false;
+                return;
+            }
+
+            if (isBoardFull()) {
                 JOptionPane.showMessageDialog(null, "It's a draw!");
                 gameOngoing = false;
+                return;
+            }
+
+            playerTurn = false;
+            BestMove(botMark, playerMark);
+
+            if (checkWinner(botMark)) {
+                JOptionPane.showMessageDialog(null, "Bot wins!");
+                gameOngoing = false;
+                return;
+            }
+
+            if (isBoardFull()) {
+                JOptionPane.showMessageDialog(null, "It's a draw!");
+                gameOngoing = false;
+            } else {
+                playerTurn = true;
             }
         }
     }
@@ -234,7 +238,7 @@ public class Window4x4 extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Window3x3 window = new Window3x3();
+            Window4x4 window = new Window4x4();
             window.setVisible(true);
         });
     }
